@@ -12,7 +12,7 @@ namespace Lab2
         public string Name { get; set; }
         public bool IsSweet { get; set; }
         public double Price { get; set; }
-
+        public double UsdPrice => Price / UsdCourse.Current;
         public static Fruit Create()
         {
             Random r = new Random();
@@ -27,7 +27,8 @@ namespace Lab2
 
         override public string ToString()
         {
-            return $"Nazwa: {Name}, Czy jest słodki: {IsSweet}, Cena: {Price.ToString("C2")}";
+            string formattedPrice = MyFormatter.FormatUsdPrice(UsdPrice);
+            return $"Nazwa: {Name}, Czy jest słodki: {IsSweet}, Cena w zł: {Price.ToString("C2")}, Cena w USD: {formattedPrice}";
         }
     }
 

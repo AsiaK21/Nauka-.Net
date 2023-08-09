@@ -1,22 +1,29 @@
-﻿using Lab2;
+﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
-class Program
+namespace Lab2
 {
-    static void Main()
+    internal class Program
     {
-        List<Fruit> fruitsList = new List<Fruit>();
-
-        for (int i = 0; i < 15; i++)
+        static async Task Main()
         {
-            Fruit fruit = Fruit.Create();
-            fruitsList.Add(fruit);
-        }
+            UsdCourse.Current = await UsdCourse.GetUsdCourseAsync();
+            List<Fruit> fruitsList = new List<Fruit>();
 
-        foreach (Fruit fruit in fruitsList)
-        {
-            //Console.WriteLine($"Nazwa: {fruit.Name}, Czy jest słodki: {fruit.IsSweet}, Cena: {fruit.Price}");
-            Console.WriteLine(fruit.ToString());
+            for (int i = 0; i < 15; i++)
+            {
+                Fruit fruit = Fruit.Create();
+                fruitsList.Add(fruit);
+            }
+
+            var sweetFruits = fruitsList.Where(fruit => fruit.IsSweet).OrderByDescending(fruit => fruit.Price);
+
+            foreach (Fruit fruit in sweetFruits)
+            {
+                Console.WriteLine(fruit.ToString());
+            }
         }
     }
 }
